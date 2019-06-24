@@ -30,6 +30,29 @@ namespace PlanGrid.Api.Tests
             await ValidateIssue(issue, client);
         }
 
+        [Test]
+        public async Task GetIssueList()
+        {
+            IPlanGridApi client = PlanGridClient.Create();
+            IssueList issueList = await client.GetIssueList(TestData.Project1Uid,"SomeUid");
+            await ValidateIssueList(issueList, client);
+        }
+
+        [Test]
+        public async Task GetIssueLists()
+        {
+            IPlanGridApi client = PlanGridClient.Create();
+            Page<IssueList> page = await client.GetIssueLists(TestData.Project1Uid);
+            Assert.AreEqual(1, page.TotalCount);
+            IssueList issueList = page.Data[0];
+            await ValidateIssueList(issueList, client);
+        }
+
+        private Task ValidateIssueList(IssueList issueList, IPlanGridApi client)
+        {
+            throw new NotImplementedException();
+        }
+
         private static async Task ValidateIssue(Issue issue, IPlanGridApi client)
         {
             Assert.IsFalse(issue.IsDeleted);

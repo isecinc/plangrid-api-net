@@ -46,11 +46,16 @@ namespace PlanGrid.Api
         [Delete("/projects/{projectUid}/users/{userUid}")]
         Task RemoveUser(string projectUid, string userUid);
 
-        [Get("/projects/{projectUid}/issues/{issueUid}")]
-        Task<Issue> GetIssue(string projectUid, string issueUid);
+        // Issues
+
+        [Post("/projects/{projectUid}/issues/")]
+        Task<Issue> CreateIssue(string projectUid, Array assignedToUids, float costImpact, string description, string dueAt, bool hasCostImpact, bool hasScheduleImpact, string issueListUid, string room, int scheduleImpact, string startDate, string status, string title, string type);
 
         [Get("/projects/{projectUid}/issues")]
         Task<Page<Issue>> GetIssues(string projectUid, int skip = Page.Skip, int limit = Page.Limit);
+
+        [Get("/projects/{projectUid}/issues/{issueUid}")]
+        Task<Issue> GetIssue(string projectUid, string issueUid);
 
         [Get("/projects/{projectUid}/issues/{issueUid}/comments")]
         Task<Page<Comment>> GetIssueComments(string projectUid, string issueUid, int skip = Page.Skip, int limit = Page.Limit);
@@ -58,6 +63,23 @@ namespace PlanGrid.Api
         [Get("/projects/{projectUid}/issues/{issueUid}/photos")]
         Task<Page<Photo>> GetIssuePhotos(string projectUid, string issueUid, int skip = Page.Skip, int limit = Page.Limit);
 
+        // Issue Lists
+        [Post("/projects/{projectUid}/issue_lists")]
+        Task<IssueList> CreateIssueList(string projectUid, string name);
+
+        [Get("/projects/{projectUid}/issue_lists")]
+        Task<Page<IssueList>> GetIssueLists(string projectUid, int skip = Page.Skip, int limit = Page.Limit);
+
+        [Get("/projects/{projectUid}/issue_lists/{issueListUid}")]
+        Task<IssueList> GetIssueList(string projectUid, string issueListUid);
+
+        [Patch("/projects/{projectUid}/issue_lists/{issueListUid}")]
+        Task UpdateIssueList(string projectUid, string issueListUid, string name);
+
+        [Delete("/projects/{projectUid}/issue_lists/{issueListUid}")]
+        Task DeleteIssueList(string projectUid, string issueListUid);
+        
+        // Rfis
         [Get("/projects/{projectUid}/rfis")]
         Task<Page<Rfi>> GetRfis(string projectUid, int skip = Page.Skip, int limit = Page.Limit);
 
